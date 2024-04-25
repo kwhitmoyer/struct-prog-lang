@@ -46,6 +46,7 @@ patterns = [
     [r"\]", "]"],
     [r",", ","],
     [r"\;", ";"],
+    [r"%", "%"],
     [r".", "#error"],  # unexpected content
 ]
 
@@ -101,7 +102,7 @@ def tokenize(characters):
 
 def test_simple_tokens():
     print("testing simple tokens...")
-    examples = ".,[,],+,-,*,/,(,),{,},;,!,&&,||,<,>,<=,>=,==,!=".split(",")
+    examples = ".,[,],+,-,*,/,(,),{,},;,!,&&,||,<,>,<=,>=,==,!=,%".split(",")
     for example in examples:
         t = tokenize(example)[0]
         assert t["tag"] == example
