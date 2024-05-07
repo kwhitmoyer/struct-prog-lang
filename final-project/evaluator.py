@@ -85,6 +85,12 @@ def evaluate_expression(ast, environment):
         left_value, environment = evaluate(ast["left"], environment)
         right_value, environment = evaluate(ast["right"], environment)
         return left_value * right_value, environment
+    if ast["tag"] == "%":
+        left_value, environment = evaluate(ast["left"], environment)
+        right_value, environment = evaluate(ast["right"], environment)
+        if right_value == 0:
+            raise Exception("Division by zero")
+        return left_value % right_value, environment
     if ast["tag"] == "<":
         left_value, environment = evaluate(ast["left"], environment)
         right_value, environment = evaluate(ast["right"], environment)
@@ -243,9 +249,16 @@ def test_evaluate_subtraction():
     equals("11-5", {}, 6)
 
 
+
 def test_evaluate_division():
     print("test evaluate division.")
     equals("15/5", {}, 3)
+
+def test_evaluate_modulus():
+    print("test evaluate modulus")
+    equals("10%3", {}, 1)
+
+
 
 
 def test_evaluate_unary_operators():
@@ -400,6 +413,7 @@ if __name__ == "__main__":
     test_evaluate_subtraction()
     test_evaluate_division()
     test_evaluate_division_by_zero()
+    test_evaluate_modulus()
     test_evaluate_unary_operators()
     test_evaluate_relational_operators()
     test_evaluate_logical_operators()
